@@ -1,0 +1,14 @@
+# Node.js
+node_modules/
+npm-debug.log
+.env
+
+# MySQL dump files
+*.sql
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
