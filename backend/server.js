@@ -12,6 +12,7 @@ console.log("server starting");
 //Create express app
 const app = express();
 
+
 //allow JSON request bodies
 app.use(express.json());
 app.use(cors());
@@ -37,6 +38,9 @@ db.getConnection((err, connection) => {
 });
 
 const PORT = process.env.PORT || 3000;
+
+const userRoutes = require("./routes/userRoutes");
+app.use("/api/users", userRoutes);
 
 //Start the server
 app.listen(PORT, () => {
