@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Weather Preferences - Golf Weather App</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <div class="container">
+        <h1> Save your Weather Preferences </h1>
+
+        <form id="prefsForm">
+            <label>
+                Temperature:
+                <select name="temp_pref" required>
+                    <option value="">-- select --</option>
+                    <option value="HOT">HOT</option>
+                    <option value="WARM">WARM</option>
+                    <option value="COOL">COOL</option>
+                    <option value="COLD">COLD</option>
+                </select>
+            </label>
+            <br /><br />
+            <label>
+                Wind:
+                <select name="wind_pref" required>
+                    <option value="">-- select --</option>
+                    <option value="BREEZY">BREEZY</option>
+                    <option value="LIGHT BREEZE">LIGHT BREEZE</option>
+                    <option value="CALM">CALM</option>
+                </select>
+            </label>
+            <br /><br />
+            
+            <label>
+                Humidity:
+                <select name="humidity_pref" required>
+                    <option value="">-- select --</option>
+                    <option value="DRY">DRY</option>
+                    <option value="MODERATE">MODERATE</option>
+                    <option value="HUMID">HUMID</option>
+                </select>
+            </label>
+            <br /><br />
+
+            <button type="submit">Save Preferences</button>
+        </form>
+    </div>
+        <script src="preferences.js"></script>
+</body>
+</html>
