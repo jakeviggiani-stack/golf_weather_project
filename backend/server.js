@@ -55,3 +55,7 @@ app.listen(PORT, () => {
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/index.html"));
 });
+
+app.get("/preferences.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/preferences.html"));
+});

@@ -1,3 +1,4 @@
+
 console.log("Signup script loaded");
 document.querySelector("form").addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -11,18 +12,26 @@ document.querySelector("form").addEventListener("submit", async (event) => {
         return;
     }
 
-    const response = await fetch("http://localhost:3000/api/users/signup", {
-        method: "POST",
-        headers: {"Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-    });
+    try {
+        const response = await fetch("http://localhost:3000/api/users/signup", {
+            method: "POST",
+            headers: {"Content-Type": "application/json" },
+            body: JSON.stringify({ username, password }),
+        });
 
-    const data = await response.json();
+        const data = await response.json();
+        console.log("Signup response data:", data);
 
-    if (response.ok) {
-        alert("Signup successful!");
-        window.location.href = "/login.html";
-    } else {
-        alert(`Signup failed: ${data.message}`);
+        if (response.ok) {
+            alert("Signup successful!");
+            localStorage.setItem("currentUser", username);
+            window.location.href = "/preferences.html";
+        } else {
+            alert(`Signup failed: ${data.message}`);
+        }
+    } catch (error) {
+        console.error('Error during signup:', error);
+        alert('Signup failed: Server error.');
     }
 });
+
