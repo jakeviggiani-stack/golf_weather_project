@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const data = await response.json();
     if (response.ok) {
         alert("Preferences saved successfully!");
+        window.location.href = "courses.html";
     } else {
         alert(`Failed to save preferences: ${data.message}`);
     }
