@@ -15,6 +15,7 @@ document.querySelector("form").addEventListener("submit", async (event) => {
     if (response.ok) {
         alert("Login successful!");
         localStorage.setItem("user_id", data.user_id);
+        localStorage.setItem("currentUser", username);
         window.location.href = "/index.html";
     } else {
         alert(`Login failed: ${data.message}`);

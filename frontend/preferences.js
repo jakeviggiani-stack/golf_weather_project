@@ -11,8 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener("submit", async (event) => {
         event.preventDefault();
 
-    const username = localStorage.getItem("currentUser");
-    const user_id = localStorage.getItem("currentUserId");
+    const user_id = localStorage.getItem("user_id");
 
     const temp_pref = document.querySelector("select[name='temp_pref']").value;
     const wind_pref = document.querySelector("select[name='wind_pref']").value;
@@ -21,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const response = await fetch("http://localhost:3000/api/users/preferences", {
         method: "POST",
         headers: {"Content-Type": "application/json" },
-        body: JSON.stringify({ username, temp_pref, wind_pref, humidity_pref }),
+        body: JSON.stringify({user_id, temp_pref, wind_pref, humidity_pref }),
 
 });
     const data = await response.json();

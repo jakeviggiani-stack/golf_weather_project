@@ -25,6 +25,7 @@ document.querySelector("form").addEventListener("submit", async (event) => {
         if (response.ok) {
             alert("Signup successful!");
             localStorage.setItem("currentUser", username);
+            localStorage.setItem("user_id", data.user_id);
             window.location.href = "/preferences.html";
         } else {
             alert(`Signup failed: ${data.message}`);

@@ -88,26 +88,11 @@ router.post('/login', (req, res) => {
 
 //This section handles saving user preferences
 router.post('/preferences', (req, res) => {
-    const { username, temp_pref, wind_pref, humidity_pref } = req.body;
+    const { user_id, temp_pref, wind_pref, humidity_pref } = req.body;
 
-    if (!username || !temp_pref || !wind_pref || !humidity_pref) {
+    if (!user_id || !temp_pref || !wind_pref || !humidity_pref) {
         return res.status(400).json({ message: 'All preferences are required.' });
     }
-
-   db.query(
-    'SELECT user_id FROM users WHERE username = ?',
-    [username],
-    (err, rows) => {
-      if (err) {
-        console.error('Error fetching user ID:', err);
-        return res.status(500).json({ message: 'Database error.' });
-      }
-
-        if (rows.length === 0) {
-            return res.status(400).json({ message: 'User not found.' });
-        }
-
-        const user_id = rows[0].user_id;
 
         const query = "INSERT INTO preferences (user_id, temp_pref, wind_pref, humidity_pref) VALUES (?, ?, ?, ?)";
         db.query(query, [user_id, temp_pref, wind_pref, humidity_pref], (err2, result) => {
@@ -118,5 +103,39 @@ router.post('/preferences', (req, res) => {
 
             return res.status(201).json({ message: 'Preferences saved successfully.' });
         });
+    });
+
+//This section handles saving users favorite courses
+router.post('/courses', (req, res) => {
+    const { user_id, course_ids } = req.body;
+
+
+    if (!user_id || !course_ids || !Array.isArray(course_ids) || course_ids.length === 0) {
+        return res.status(400).json({ message: 'User ID and Course IDs are required.' });
+    }
+
+    const query = "INSERT INTO favorites (user_id, course_id) VALUES ?";
+    const values = course_ids.map(course_id => [user_id, course_id]);
+
+    db.query(query, [values], (err, result) => {
+        if (err) {
+            console.error('Error saving courses:', err);
+            return res.status(500).json({ message: 'Database error.' });
+        }
+
+        return res.status(201).json({ message: 'Courses saved successfully.' });
+    });
+});
+
+//This section handles fetching available courses
+router.get('/courses', (req, res) => {
+    const query = "SELECT course_id, course_name FROM courses";
+
+    db.query(query, (err, rows) => {
+        if (err) {
+            console.error('Error fetching courses:', err);
+            return res.status(500).json({ message: 'Database error.' });
+        }
+        res.json(rows);
     });
 });
