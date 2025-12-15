@@ -139,3 +139,45 @@ router.get('/courses', (req, res) => {
         res.json(rows);
     });
 });
+
+//This section handles fetching user preferences    
+router.get('/:user_id/preferences', (req, res) => {
+    const {user_id} = req.params;
+
+    const query = 'SELECT temp_pref, wind_pref, humidity_pref FROM preferences WHERE user_id = ? ORDER BY pref_id DESC LIMIT 1';
+
+    db.query(query, [user_id], (err, rows) => {
+        if (err) {
+            console.error('Error fetching preferences:', err);
+            return res.status(500).json({ message: 'Database error.' });
+        }
+
+        if (rows.length === 0) {
+            return res.status(404).json({ message: 'Preferences not found.' });
+        }   
+
+        res.json(rows[0]);
+    });
+});
+
+//This section handles fetching user favorite courses
+router.get('/:user_id/courses', (req, res) => {
+    const { user_id } = req.params;
+
+    const query = `
+        SELECT c.course_id, c.course_name, c.lat, c.lon
+        FROM favorites f
+        JOIN courses c ON f.course_id = c.course_id
+        WHERE f.user_id = ?
+    `;
+
+    db.query(query, [user_id], (err, rows) => {
+        if (err) {
+            console.error('Error fetching user courses:', err);
+            return res.status(500).json({ message: 'Database error.' });
+        }   
+        res.json(rows);
+    });
+});
+
+
